@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
@@ -65,7 +66,7 @@ interface SidebarProps {
   className?: string
 }
 
-export function Sidebar({ className }: SidebarProps) {
+export const Sidebar = React.memo(function Sidebar({ className }: SidebarProps) {
   const pathname = usePathname()
   const { isAuthenticated } = useAuthStore()
 
@@ -139,4 +140,4 @@ export function Sidebar({ className }: SidebarProps) {
       </div>
     </div>
   )
-}
+})

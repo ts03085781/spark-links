@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
@@ -11,10 +12,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Settings, User, LogOut, FolderOpen } from 'lucide-react'
+import { User, LogOut, FolderOpen } from 'lucide-react'
 import { useAuthStore } from '@/stores/auth'
 
-export function Header() {
+export const Header = React.memo(function Header() {
   const router = useRouter()
   const { user, isAuthenticated, logout } = useAuthStore()
 
@@ -106,4 +107,4 @@ export function Header() {
       </div>
     </header>
   )
-}
+})
