@@ -21,6 +21,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   isLoading: true,
   isAuthenticated: false,
   
+  // 設定用戶狀態
   setUser: (user) => {
     set({ 
       user, 
@@ -29,8 +30,10 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     })
   },
   
+  // 設定加載狀態
   setLoading: (loading) => set({ isLoading: loading }),
   
+  // 登入
   login: async (email, password) => {
     const supabase = createClient()
     set({ isLoading: true })
@@ -55,6 +58,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     }
   },
   
+  // 註冊
   register: async (email, password, name) => {
     const supabase = createClient()
     set({ isLoading: true })
@@ -87,6 +91,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     }
   },
   
+  // 登出
   logout: async () => {
     const supabase = createClient()
     await supabase.auth.signOut()
@@ -96,7 +101,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       isLoading: false 
     })
   },
-  
+
+  // 刷新用戶狀態
   refreshUser: async () => {
     const supabase = createClient()
     set({ isLoading: true })

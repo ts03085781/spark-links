@@ -52,6 +52,7 @@ export const useProjectsStore = create<ProjectsState>((set, get) => ({
     pagination: { ...get().pagination, ...pagination } 
   }),
   
+  // 獲取專案列表
   fetchProjects: async (filters = {}, page = 1) => {
     const supabase = createClient()
     set({ isLoading: true })
@@ -120,6 +121,7 @@ export const useProjectsStore = create<ProjectsState>((set, get) => ({
     }
   },
   
+  // 獲取單個專案
   fetchProject: async (id: string) => {
     const supabase = createClient()
     set({ isLoading: true })
@@ -155,6 +157,7 @@ export const useProjectsStore = create<ProjectsState>((set, get) => ({
     }
   },
   
+  // 建立專案
   createProject: async (projectData) => {
     const supabase = createClient()
     
@@ -178,6 +181,7 @@ export const useProjectsStore = create<ProjectsState>((set, get) => ({
     }
   },
   
+  // 更新專案
   updateProject: async (id: string, projectData) => {
     const supabase = createClient()
     
@@ -210,6 +214,7 @@ export const useProjectsStore = create<ProjectsState>((set, get) => ({
     }
   },
   
+  // 刪除專案
   deleteProject: async (id: string) => {
     const supabase = createClient()
     
@@ -238,6 +243,7 @@ export const useProjectsStore = create<ProjectsState>((set, get) => ({
     }
   },
   
+  // 搜尋專案
   searchProjects: async (keyword: string) => {
     const filters = { ...get().filters, keyword }
     await get().fetchProjects(filters, 1)

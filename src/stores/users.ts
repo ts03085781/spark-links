@@ -50,6 +50,7 @@ export const useUsersStore = create<UsersState>((set, get) => ({
     pagination: { ...get().pagination, ...pagination } 
   }),
   
+  // 獲取用戶列表
   fetchUsers: async (filters = {}, page = 1) => {
     const supabase = createClient()
     set({ isLoading: true })
@@ -109,6 +110,7 @@ export const useUsersStore = create<UsersState>((set, get) => ({
     }
   },
   
+  // 獲取單個用戶
   fetchUser: async (id: string) => {
     const supabase = createClient()
     set({ isLoading: true })
@@ -133,6 +135,7 @@ export const useUsersStore = create<UsersState>((set, get) => ({
     }
   },
   
+  // 更新用戶資料
   updateProfile: async (profileData) => {
     const supabase = createClient()
     
@@ -165,6 +168,7 @@ export const useUsersStore = create<UsersState>((set, get) => ({
     }
   },
   
+  // 搜尋用戶
   searchUsers: async (keyword: string) => {
     const filters = { ...get().filters, keyword }
     await get().fetchUsers(filters, 1)

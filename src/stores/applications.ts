@@ -42,6 +42,7 @@ export const useApplicationsStore = create<ApplicationsState>((set, get) => ({
   setSentInvitations: (invitations) => set({ sentInvitations: invitations }),
   setLoading: (loading) => set({ isLoading: loading }),
   
+  // 獲取已接收的申請
   fetchReceivedApplications: async () => {
     const supabase = createClient()
     set({ isLoading: true })
@@ -72,7 +73,7 @@ export const useApplicationsStore = create<ApplicationsState>((set, get) => ({
       set({ isLoading: false })
     }
   },
-  
+  // 獲取已發送的申請
   fetchSentApplications: async () => {
     const supabase = createClient()
     set({ isLoading: true })
@@ -105,7 +106,7 @@ export const useApplicationsStore = create<ApplicationsState>((set, get) => ({
       set({ isLoading: false })
     }
   },
-  
+  // 發送申請
   createApplication: async (projectId: string, message: string) => {
     const supabase = createClient()
     
@@ -148,7 +149,7 @@ export const useApplicationsStore = create<ApplicationsState>((set, get) => ({
       return { error: '提交申請失敗，請稍後再試' }
     }
   },
-  
+  // 回覆申請
   respondToApplication: async (applicationId: string, status: 'accepted' | 'rejected', message?: string) => {
     const supabase = createClient()
     
@@ -193,7 +194,7 @@ export const useApplicationsStore = create<ApplicationsState>((set, get) => ({
       return { error: '回覆申請失敗，請稍後再試' }
     }
   },
-  
+  // 獲取已接收的邀請
   fetchReceivedInvitations: async () => {
     const supabase = createClient()
     set({ isLoading: true })
@@ -224,7 +225,7 @@ export const useApplicationsStore = create<ApplicationsState>((set, get) => ({
       set({ isLoading: false })
     }
   },
-  
+  // 獲取已發送的邀請
   fetchSentInvitations: async () => {
     const supabase = createClient()
     set({ isLoading: true })
@@ -256,6 +257,7 @@ export const useApplicationsStore = create<ApplicationsState>((set, get) => ({
     }
   },
   
+  // 發送邀請
   createInvitation: async (projectId: string, inviteeId: string, message: string) => {
     const supabase = createClient()
     
@@ -300,6 +302,7 @@ export const useApplicationsStore = create<ApplicationsState>((set, get) => ({
     }
   },
   
+  // 回覆邀請
   respondToInvitation: async (invitationId: string, status: 'accepted' | 'rejected', message?: string) => {
     const supabase = createClient()
     
