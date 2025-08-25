@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { createClient } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/browser'
 import { Application, Invitation } from '@/types'
 
 interface ApplicationsState {
