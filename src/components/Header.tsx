@@ -18,9 +18,13 @@ export function Header() {
   const router = useRouter()
   const { user, isAuthenticated, logout } = useAuthStore()
 
+  // 調試信息
+  console.log('Header render - isAuthenticated:', isAuthenticated, 'user:', user?.name)
+
   const handleLogout = async () => {
     await logout()
     router.push('/')
+    router.refresh()
   }
 
   return (

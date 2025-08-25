@@ -46,22 +46,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         return { error: error.message }
       }
       
-      if (data.user) {
-        // 獲取用戶完整資料
-        const { data: userData, error: userError } = await supabase
-          .from('users')
-          .select('*')
-          .eq('id', data.user.id)
-          .single()
-          
-        if (userError) {
-          set({ isLoading: false })
-          return { error: userError.message }
-        }
-        
-        get().setUser(userData)
-      }
-      
+      // 不需要手動設定用戶狀態，AuthProvider 會處理
+      set({ isLoading: false })
       return {}
     } catch (error) {
       set({ isLoading: false })
@@ -74,9 +60,15 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     set({ isLoading: true })
     
     try {
+      // 註冊用戶，將姓名存在 metadata 中
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          data: {
+            name: name,
+          }
+        }
       })
       
       if (error) {
@@ -84,31 +76,12 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         return { error: error.message }
       }
       
-      if (data.user) {
-        // 建立用戶資料
-        const { error: insertError } = await supabase
-          .from('users')
-          .insert({
-            id: data.user.id,
-            email: data.user.email!,
-            name,
-            skills: [],
-            experience_description: '',
-            work_mode: 'fulltime',
-            partner_description: '',
-            location_preference: 'remote',
-            is_public: false,
-          })
-          
-        if (insertError) {
-          set({ isLoading: false })
-          return { error: insertError.message }
-        }
-      }
-      
+      // 註冊成功，讓觸發器自動處理用戶資料建立
+      // 或者用戶 email 確認後再建立資料
       set({ isLoading: false })
       return {}
     } catch (error) {
+      console.error('Registration error:', error)
       set({ isLoading: false })
       return { error: '註冊失敗，請稍後再試' }
     }
