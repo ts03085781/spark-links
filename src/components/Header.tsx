@@ -25,7 +25,6 @@ export const Header = React.memo(function Header() {
   const handleLogout = async () => {
     await logout()
     router.push('/')
-    router.refresh()
   }
 
   return (

@@ -69,7 +69,6 @@ export default function LoginPage() {
 
       // 登入成功，重導向到首頁
       router.push('/')
-      router.refresh()
     } catch (error) {
       setError('登入失敗，請稍後再試')
     } finally {
