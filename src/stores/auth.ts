@@ -48,9 +48,25 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         set({ isLoading: false })
         return { error: error.message }
       }
-      
-      // 不需要手動設定用戶狀態，AuthProvider 會處理
-      set({ isLoading: false })
+
+      const { data: { user: authUser }, error: authError } = await supabase.auth.getUser()
+      if (authError || !authUser) {
+        set({ isLoading: false })
+        return { error: authError?.message }
+      }
+
+      const { data: userData, error: userError } = await supabase
+        .from('users')
+        .select('*')
+        .eq('id', authUser.id)
+        .single()
+
+      if (userError || !userData) {
+        set({ isLoading: false })
+        return { error: userError?.message }
+      }
+
+      set({ user: userData, isAuthenticated: true, isLoading: false })
       return {}
     } catch (error) {
       set({ isLoading: false })

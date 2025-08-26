@@ -20,7 +20,7 @@ export const Header = React.memo(function Header() {
   const { user, isAuthenticated, logout } = useAuthStore()
 
   // 調試信息
-  console.log('Header render - isAuthenticated:', isAuthenticated, 'user:', user?.name)
+  // console.log('Header render - isAuthenticated:', isAuthenticated, 'user:', user?.name)
 
   const handleLogout = async () => {
     await logout()
