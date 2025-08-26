@@ -20,6 +20,7 @@ import {
   Globe,
   Lock
 } from 'lucide-react'
+import { toast } from 'sonner'
 
 export default function ProfilePage() {
   const { user, setUser } = useAuthStore()
@@ -60,7 +61,9 @@ export default function ProfilePage() {
 
       if (error) {
         console.error('更新個人資料失敗:', error)
-        alert('更新失敗，請稍後再試')
+        toast.error('更新失敗', {
+          description: '請檢查網路連線或稍後再試',
+        })
         return
       }
 
@@ -74,11 +77,19 @@ export default function ProfilePage() {
       if (!fetchError && updatedUser) {
         setUser(updatedUser)
         setIsEditing(false)
-        alert('個人資料更新成功！')
+        toast.success('更新成功！', {
+          description: <span className="text-gray-600">您的個人資料已成功更新</span>,
+        })
+      } else {
+        toast.error('更新後重新載入失敗', {
+          description: <span className="text-gray-600">資料已更新但頁面顯示可能有延遲</span>,
+        })
       }
     } catch (error) {
       console.error('更新個人資料時發生錯誤:', error)
-      alert('更新失敗，請稍後再試')
+      toast.error('系統錯誤', {
+        description: <span className="text-gray-600">發生未預期的錯誤，請稍後再試</span>,
+      })
     } finally {
       setIsLoading(false)
     }
@@ -121,13 +132,26 @@ export default function ProfilePage() {
             <h1 className="text-3xl font-bold">個人資料</h1>
             <p className="text-muted-foreground">管理你的個人資料和技能信息</p>
           </div>
-          <Button 
-            onClick={() => setIsEditing(!isEditing)}
-            variant={isEditing ? "outline" : "default"}
-          >
-            <Edit3 className="h-4 w-4 mr-2" />
-            {isEditing ? '取消編輯' : '編輯資料'}
-          </Button>
+          <div className="flex gap-2">
+            {/* <Button 
+              onClick={() => {
+                toast.info('測試通知', {
+                  description: <span className="text-gray-600">Toast 通知系統運作正常！</span>,
+                })
+              }}
+              variant="outline"
+              size="sm"
+            >
+              測試通知
+            </Button> */}
+            <Button 
+              onClick={() => setIsEditing(!isEditing)}
+              variant={isEditing ? "outline" : "default"}
+            >
+              <Edit3 className="h-4 w-4 mr-2" />
+              {isEditing ? '取消編輯' : '編輯資料'}
+            </Button>
+          </div>
         </div>
 
         <div className="grid gap-6 lg:grid-cols-3">

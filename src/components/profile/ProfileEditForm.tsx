@@ -28,6 +28,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { X, Plus } from 'lucide-react'
+import { toast } from 'sonner'
 
 const profileFormSchema = z.object({
   name: z.string().min(1, '姓名不能為空'),
@@ -72,14 +73,30 @@ export function ProfileEditForm({ user, onSave, onCancel, isLoading }: ProfileEd
   const locationPreference = form.watch('location_preference')
 
   const addSkill = () => {
-    if (newSkill.trim() && !skills.includes(newSkill.trim())) {
-      form.setValue('skills', [...skills, newSkill.trim()])
-      setNewSkill('')
+    const trimmedSkill = newSkill.trim()
+    if (!trimmedSkill) {
+      toast.error('請輸入技能名稱')
+      return
     }
+    
+    if (skills.includes(trimmedSkill)) {
+      toast.warning('此技能已存在')
+      return
+    }
+    
+    if (skills.length >= 20) {
+      toast.warning('最多只能添加 20 個技能標籤')
+      return
+    }
+    
+    form.setValue('skills', [...skills, trimmedSkill])
+    setNewSkill('')
+    toast.success(`已添加技能：${trimmedSkill}`)
   }
 
   const removeSkill = (skillToRemove: string) => {
     form.setValue('skills', skills.filter(skill => skill !== skillToRemove))
+    toast.success(`已移除技能：${skillToRemove}`)
   }
 
   const onSubmit = async (data: ProfileFormData) => {
