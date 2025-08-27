@@ -13,7 +13,8 @@ import {
   MessageSquare, 
   ClipboardList,
   Mail,
-  BookOpen
+  BookOpen,
+  Plus
 } from 'lucide-react'
 import { useAuthStore } from '@/stores/auth'
 
@@ -114,9 +115,22 @@ export const Sidebar = React.memo(function Sidebar({ className }: SidebarProps) 
                 專案管理
               </p>
               <Button
-                variant={pathname === '/projects/manage' ? "secondary" : "ghost"}
+                variant={pathname === '/projects/create' ? "secondary" : "ghost"}
                 className={cn(
                   "w-full justify-start gap-2 h-12 px-4",
+                  pathname === '/projects/create' && "bg-secondary font-medium"
+                )}
+                asChild
+              >
+                <Link href="/projects/create">
+                  <Plus className="h-5 w-5" />
+                  創建專案
+                </Link>
+              </Button>
+              <Button
+                variant={pathname === '/projects/manage' ? "secondary" : "ghost"}
+                className={cn(
+                  "w-full justify-start gap-2 h-12 px-4 mt-1",
                   pathname === '/projects/manage' && "bg-secondary font-medium"
                 )}
                 asChild
