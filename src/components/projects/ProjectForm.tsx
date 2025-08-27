@@ -45,9 +45,10 @@ interface ProjectFormProps {
   onCancel: () => void
   isLoading?: boolean
   initialData?: Partial<ProjectFormData>
+  submitButtonText?: string
 }
 
-export function ProjectForm({ onSubmit, onCancel, isLoading, initialData }: ProjectFormProps) {
+export function ProjectForm({ onSubmit, onCancel, isLoading, initialData, submitButtonText }: ProjectFormProps) {
   const [newRole, setNewRole] = useState('')
   const [newSkill, setNewSkill] = useState('')
   
@@ -348,7 +349,7 @@ export function ProjectForm({ onSubmit, onCancel, isLoading, initialData }: Proj
               取消
             </Button>
             <Button type="submit" disabled={isLoading}>
-              {isLoading ? '創建中...' : '創建專案'}
+              {submitButtonText || '送出'}
             </Button>
           </div>
         </form>

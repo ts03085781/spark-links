@@ -56,6 +56,7 @@ export default function ManageProjectsPage() {
 
   useEffect(() => {
     loadMyProjects()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
 
   return (

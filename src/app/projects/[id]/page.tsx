@@ -17,8 +17,7 @@ import {
   Target,
   Settings,
   UserPlus,
-  ArrowLeft,
-  MessageSquare
+  ArrowLeft
 } from 'lucide-react'
 import Link from 'next/link'
 import { toast } from 'sonner'
@@ -139,11 +138,11 @@ export default function ProjectDetailPage() {
       // 創建申請
       const { error } = await supabase
         .from('applications')
-        .insert({
+        .insert([{
           project_id: project.id,
           applicant_id: user.id,
           message: `我想加入「${project.title}」專案！`
-        })
+        }])
 
       if (error) {
         console.error('申請加入失敗:', error)
@@ -170,6 +169,7 @@ export default function ProjectDetailPage() {
     if (projectId) {
       loadProject()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId])
 
   if (loading) {
@@ -236,10 +236,11 @@ export default function ProjectDetailPage() {
                     </Button>
                   )}
                   {isCreator && (
-                    <Button variant="outline" className="gap-2">
+                    <Button variant="outline" className="gap-2" onClick={() => router.push(`/projects/${project.id}/edit`)}>
                       <Settings className="h-4 w-4" />
-                      管理專案
+                      編輯專案
                     </Button>
+                    
                   )}
                 </div>
               </div>

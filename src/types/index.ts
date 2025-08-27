@@ -202,8 +202,18 @@ export interface Database {
       }
       applications: {
         Row: Application
-        Insert: Omit<Application, 'id' | 'created_at' | 'updated_at'>
-        Update: Partial<Omit<Application, 'id' | 'created_at' | 'updated_at'>>
+        Insert: {
+          project_id: string
+          applicant_id: string
+          message: string
+          status?: 'pending' | 'accepted' | 'rejected'
+          response_message?: string
+        }
+        Update: Partial<{
+          message: string
+          status: 'pending' | 'accepted' | 'rejected'
+          response_message: string
+        }>
       }
       invitations: {
         Row: Invitation

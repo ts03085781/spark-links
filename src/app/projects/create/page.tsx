@@ -79,6 +79,7 @@ export default function CreateProjectPage() {
           onSubmit={handleSubmit}
           onCancel={handleCancel}
           isLoading={isLoading}
+          submitButtonText="創建專案"
         />
       </div>
     </ProtectedRoute>
