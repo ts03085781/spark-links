@@ -16,6 +16,7 @@ import {
   Lock
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import Link from 'next/link'
 
 interface TalentCardProps {
   talent: User
@@ -126,9 +127,11 @@ export function TalentCard({ talent }: TalentCardProps) {
 
         {/* 操作按鈕 */}
         <div className="pt-2 border-t">
-          <Button variant="outline" size="sm" className="w-full gap-2">
-            <MessageSquare className="h-4 w-4" />
-            聯絡合作
+          <Button variant="outline" size="sm" className="w-full gap-2" asChild>
+            <Link href={`/talents/${talent.id}`}>
+              <MessageSquare className="h-4 w-4" />
+              詳細資訊
+            </Link>
           </Button>
         </div>
       </CardContent>
