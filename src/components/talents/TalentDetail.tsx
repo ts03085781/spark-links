@@ -324,7 +324,7 @@ export function TalentDetail({ talent }: TalentDetailProps) {
             </DialogTitle>
           </DialogHeader>
           
-          <div className="space-y-3 max-h-96 overflow-y-auto">
+          <div className="space-y-3 max-h-96 overflow-y-auto pb-3">
             {myProjects.map((project) => (
               <Card 
                 key={project.id} 
