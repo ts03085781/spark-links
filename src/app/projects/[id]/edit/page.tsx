@@ -125,7 +125,7 @@ export default function EditProjectPage() {
         <div className="text-center py-12">
           <p className="text-muted-foreground">專案不存在或您沒有編輯權限</p>
           <Button asChild className="mt-4">
-            <Link href="/projects/manage">返回我的專案</Link>
+            <Link href="/projects/manage">返回我創建的專案</Link>
           </Button>
         </div>
       </ProtectedRoute>

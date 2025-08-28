@@ -36,7 +36,7 @@ export default function ManageProjectsPage() {
         .order('created_at', { ascending: false })
 
       if (error) {
-        console.error('載入我的專案失敗:', error)
+        console.error('載入我創建的專案失敗:', error)
         toast.error('載入失敗', {
           description: '請檢查網路連線或稍後再試',
         })
@@ -45,7 +45,7 @@ export default function ManageProjectsPage() {
 
       setProjects(data || [])
     } catch (error) {
-      console.error('載入我的專案時發生錯誤:', error)
+      console.error('載入我創建的專案時發生錯誤:', error)
       toast.error('系統錯誤', {
         description: '發生未預期的錯誤，請稍後再試',
       })
@@ -65,7 +65,7 @@ export default function ManageProjectsPage() {
         {/* 頁面標題 */}
         <div className="flex justify-between items-start">
           <div>
-            <h1 className="text-3xl font-bold">我的專案</h1>
+            <h1 className="text-3xl font-bold">我創建的專案</h1>
             <p className="text-muted-foreground">管理和編輯你創建的創業專案</p>
           </div>
           <Button asChild>
@@ -87,7 +87,7 @@ export default function ManageProjectsPage() {
                 <div className="space-y-2">
                   <p className="text-lg font-medium">還沒有專案</p>
                   <p className="text-muted-foreground">
-                    開始創庺您的第一個創業專案，招募志同道合的創業夥伴
+                    開始創建您的第一個創業專案，招募志同道合的創業夥伴
                   </p>
                 </div>
                 <Button asChild>

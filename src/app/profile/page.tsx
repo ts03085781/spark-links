@@ -203,7 +203,7 @@ export default function ProfilePage() {
                     <MapPin className="h-4 w-4 text-muted-foreground" />
                     <span>
                       {user.location_preference === 'remote' 
-                        ? '遠端工作' 
+                        ? '遠端合作' 
                         : user.specific_location || '特定地點'}
                     </span>
                   </div>

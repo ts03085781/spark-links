@@ -214,7 +214,7 @@ export function ProfileEditForm({ user, onSave, onCancel, isLoading }: ProfileEd
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="remote">遠端工作</SelectItem>
+                          <SelectItem value="remote">遠端合作</SelectItem>
                           <SelectItem value="specific_location">特定地點</SelectItem>
                         </SelectContent>
                       </Select>

@@ -15,6 +15,7 @@ export default function CreateProjectPage() {
   const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = async (data: ProjectFormData) => {
+    console.log('創建專案', user, data)
     if (!user) return
 
     setIsLoading(true)

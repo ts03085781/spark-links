@@ -122,14 +122,14 @@ export function ProjectForm({ onSubmit, onCancel, isLoading, initialData, submit
     toast.success(`已移除技能：${skillToRemove}`)
   }
 
-  const handleSubmit = async (data: ProjectFormData) => {
-    await onSubmit(data)
-  }
+  // const handleSubmit = async (data: ProjectFormData) => {
+  //   await onSubmit(data)
+  // }
 
   return (
     <div className="space-y-6">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="grid gap-6 lg:grid-cols-2">
             {/* 基本資料 */}
             <Card>

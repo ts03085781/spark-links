@@ -14,7 +14,8 @@ import {
   ClipboardList,
   Mail,
   BookOpen,
-  Plus
+  Plus,
+  User
 } from 'lucide-react'
 import { useAuthStore } from '@/stores/auth'
 
@@ -38,12 +39,6 @@ const navigation = [
     public: true,
   },
   {
-    name: '我的專案',
-    href: '/my-projects',
-    icon: BookOpen,
-    public: false,
-  },
-  {
     name: '申請狀態',
     href: '/applications',
     icon: ClipboardList,
@@ -59,6 +54,30 @@ const navigation = [
     name: '私訊',
     href: '/messages',
     icon: MessageSquare,
+    public: false,
+  },
+  {
+    name: '個人資料',
+    href: '/profile',
+    icon: User,
+    public: false,
+  },
+  // {
+  //   name: '創建專案',
+  //   href: '/projects/create',
+  //   icon: Plus,
+  //   public: false,
+  // },
+  // {
+  //   name: '管理專案',
+  //   href: '/projects/manage',
+  //   icon: FolderOpen,
+  //   public: false,
+  // },
+  {
+    name: '我參與的專案',
+    href: '/my-projects',
+    icon: BookOpen,
     public: false,
   },
 ]
@@ -105,44 +124,6 @@ export const Sidebar = React.memo(function Sidebar({ className }: SidebarProps) 
             )
           })}
         </nav>
-        
-        {/* 分隔線和額外功能 */}
-        {isAuthenticated && (
-          <>
-            <div className="my-4 mx-4 border-t" />
-            <div className="px-4">
-              <p className="text-sm font-medium text-muted-foreground mb-2">
-                專案管理
-              </p>
-              <Button
-                variant={pathname === '/projects/create' ? "secondary" : "ghost"}
-                className={cn(
-                  "w-full justify-start gap-2 h-12 px-4",
-                  pathname === '/projects/create' && "bg-secondary font-medium"
-                )}
-                asChild
-              >
-                <Link href="/projects/create">
-                  <Plus className="h-5 w-5" />
-                  創建專案
-                </Link>
-              </Button>
-              <Button
-                variant={pathname === '/projects/manage' ? "secondary" : "ghost"}
-                className={cn(
-                  "w-full justify-start gap-2 h-12 px-4 mt-1",
-                  pathname === '/projects/manage' && "bg-secondary font-medium"
-                )}
-                asChild
-              >
-                <Link href="/projects/manage">
-                  <FolderOpen className="h-5 w-5" />
-                  管理專案
-                </Link>
-              </Button>
-            </div>
-          </>
-        )}
       </div>
       
       {/* 底部資訊 */}

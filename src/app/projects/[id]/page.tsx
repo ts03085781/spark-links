@@ -11,6 +11,7 @@ import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Separator } from '@/components/ui/separator'
 import { PageLoading } from '@/components/ui/loading'
+import { ApplicationManagement } from '@/components/projects/ApplicationManagement'
 import { 
   Users, 
   Calendar, 
@@ -391,6 +392,13 @@ export default function ProjectDetailPage() {
               </CardContent>
             </Card>
           )}
+
+          {/* 申請管理 - 只有創建者能看到 */}
+          <ApplicationManagement 
+            projectId={projectId}
+            isCreator={isCreator || false}
+            onMemberChange={loadProject}
+          />
         </div>
       </div>
     </div>
