@@ -6,11 +6,12 @@ import { useAuthStore } from '@/stores/auth'
 import { ProfileEditForm } from '@/components/profile/ProfileEditForm'
 import { createClient } from '@/lib/supabase/browser'
 import { Button } from '@/components/ui/button'
+import { User } from '@/types'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 import { 
-  User, 
+  User as UserIcon, 
   Mail, 
   MapPin, 
   Briefcase, 
@@ -26,6 +27,17 @@ export default function ProfilePage() {
   const { user, setUser } = useAuthStore()
   const [isEditing, setIsEditing] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [currentAvatarUrl, setCurrentAvatarUrl] = useState(user?.avatar_url || null)
+
+  const handleAvatarChange = (newAvatarUrl: string | null) => {
+    setCurrentAvatarUrl(newAvatarUrl)
+    if (user) {
+      setUser({
+        ...user,
+        avatar_url: newAvatarUrl || undefined
+      })
+    }
+  }
 
   const handleSave = async (data: {
     name: string
@@ -43,20 +55,22 @@ export default function ProfilePage() {
     setIsLoading(true)
     try {
       const supabase = createClient()
+      const updateData: Partial<User> = {
+        name: data.name,
+        contact_info: data.contact_info || undefined,
+        skills: data.skills,
+        experience_description: data.experience_description,
+        work_mode: data.work_mode,
+        partner_description: data.partner_description,
+        location_preference: data.location_preference,
+        specific_location: data.specific_location || undefined,
+        is_public: data.is_public,
+        updated_at: new Date().toISOString(),
+      }
+
       const { error } = await supabase
         .from('users')
-        .update({
-          name: data.name,
-          contact_info: data.contact_info || null,
-          skills: data.skills,
-          experience_description: data.experience_description,
-          work_mode: data.work_mode,
-          partner_description: data.partner_description,
-          location_preference: data.location_preference,
-          specific_location: data.specific_location || null,
-          is_public: data.is_public,
-          updated_at: new Date().toISOString(),
-        })
+        .update(updateData)
         .eq('id', user.id)
 
       if (error) {
@@ -116,6 +130,7 @@ export default function ProfilePage() {
             user={user}
             onSave={handleSave}
             onCancel={handleCancel}
+            onAvatarChange={handleAvatarChange}
             isLoading={isLoading}
           />
         </div>
@@ -160,14 +175,14 @@ export default function ProfilePage() {
             <Card>
               <CardHeader className="text-center">
                 <div className="mx-auto w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                  {user.avatar_url ? (
+                  {currentAvatarUrl ? (
                     <img 
-                      src={user.avatar_url} 
+                      src={currentAvatarUrl} 
                       alt={user.name}
                       className="w-24 h-24 rounded-full object-cover"
                     />
                   ) : (
-                    <User className="h-12 w-12 text-primary" />
+                    <UserIcon className="h-12 w-12 text-primary" />
                   )}
                 </div>
                 <CardTitle className="text-xl">{user.name || '尚未設定姓名'}</CardTitle>

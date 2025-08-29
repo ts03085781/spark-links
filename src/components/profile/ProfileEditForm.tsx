@@ -11,6 +11,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Switch } from '@/components/ui/switch'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { AvatarUpload } from '@/components/avatar/AvatarUpload'
 import {
   Form,
   FormControl,
@@ -48,10 +49,11 @@ interface ProfileEditFormProps {
   user: User
   onSave: (data: ProfileFormData) => Promise<void>
   onCancel: () => void
+  onAvatarChange?: (avatarUrl: string | null) => void
   isLoading?: boolean
 }
 
-export function ProfileEditForm({ user, onSave, onCancel, isLoading }: ProfileEditFormProps) {
+export function ProfileEditForm({ user, onSave, onCancel, onAvatarChange, isLoading }: ProfileEditFormProps) {
   const [newSkill, setNewSkill] = useState('')
   
   const form = useForm<ProfileFormData>({
@@ -114,6 +116,18 @@ export function ProfileEditForm({ user, onSave, onCancel, isLoading }: ProfileEd
                 <CardTitle>基本資料</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
+                {/* 頭像上傳 */}
+                <div>
+                  <FormLabel className="text-base font-medium">個人頭像</FormLabel>
+                  <div className="mt-2">
+                    <AvatarUpload
+                      currentAvatar={user.avatar_url}
+                      userName={user.name}
+                      onAvatarChange={onAvatarChange}
+                    />
+                  </div>
+                </div>
+
                 <FormField
                   control={form.control}
                   name="name"
