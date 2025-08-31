@@ -79,16 +79,11 @@ export function AvatarUpload({
       // 3. 上傳到 Supabase Storage
       const supabase = createClient()
       
-      // 先刪除舊的頭像 (如果存在)
-      await supabase.storage
-        .from('avatars')
-        .remove([fileName])
       
       // 上傳新頭像
       const { error: uploadError } = await supabase.storage
         .from('avatars')
         .upload(fileName, compressedFile, {
-          cacheControl: '3600',
           upsert: true,
         })
 
@@ -202,7 +197,7 @@ export function AvatarUpload({
           {/* 頭像顯示區域 */}
           <div className="relative inline-block">
             <Avatar className="w-24 h-24 mx-auto">
-              <AvatarImage src={currentAvatar || ''} alt={userName} />
+              <AvatarImage src={currentAvatar || undefined} alt={userName} />
               <AvatarFallback className="text-2xl">
                 {userName.charAt(0) || <UserIcon className="w-8 h-8" />}
               </AvatarFallback>
@@ -226,7 +221,7 @@ export function AvatarUpload({
               isUploading && "pointer-events-none opacity-50"
             )}
           >
-            <input {...getInputProps()} />
+            <input id="upload-input" {...getInputProps()} />
             <div className="space-y-2">
               <Camera className="w-8 h-8 mx-auto text-muted-foreground" />
               <div className="text-sm">
@@ -247,8 +242,9 @@ export function AvatarUpload({
           {/* 操作按鈕 */}
           <div className="flex gap-2 justify-center">
             <Button 
+              type="button"
               size="sm" 
-              onClick={() => (document.querySelector('input[type="file"]') as HTMLInputElement)?.click()}
+              onClick={() => (document.querySelector('#upload-input') as HTMLInputElement)?.click()}
               disabled={isUploading}
             >
               <Upload className="w-4 h-4 mr-2" />
@@ -257,6 +253,7 @@ export function AvatarUpload({
             
             {currentAvatar && (
               <Button 
+                type="button"
                 variant="outline" 
                 size="sm"
                 onClick={() => setShowRemoveDialog(true)}
