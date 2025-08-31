@@ -65,7 +65,7 @@ export const Header = React.memo(function Header() {
                   </div>
                   <DropdownMenuSeparator />
                   
-                  <DropdownMenuItem asChild>
+                  {/* <DropdownMenuItem asChild>
                     <Link href="/profile" className="flex items-center">
                       <User className="mr-2 h-4 w-4" />
                       個人資料設定
@@ -77,7 +77,7 @@ export const Header = React.memo(function Header() {
                       <FolderOpen className="mr-2 h-4 w-4" />
                       創業專案設定
                     </Link>
-                  </DropdownMenuItem>
+                  </DropdownMenuItem> */}
                   
                   <DropdownMenuSeparator />
                   
