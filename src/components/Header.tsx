@@ -12,8 +12,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { User, LogOut, FolderOpen } from 'lucide-react'
+import { LogOut } from 'lucide-react'
 import { useAuthStore } from '@/stores/auth'
+import { MobileSidebar } from '@/components/MobileSidebar'
 
 export const Header = React.memo(function Header() {
   const router = useRouter()
@@ -30,13 +31,16 @@ export const Header = React.memo(function Header() {
   return (
     <header className="flex justify-center sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
-        {/* 左側：專案名稱 */}
-        <Link 
-          href="/" 
-          className="flex items-center space-x-2 font-bold text-xl text-primary hover:text-primary/80 transition-colors"
-        >
-          Spark Links
-        </Link>
+        {/* 左側：漢堡選單 + 專案名稱 */}
+        <div className="flex items-center">
+          <MobileSidebar />
+          <Link 
+            href="/" 
+            className="flex items-center space-x-2 font-bold text-xl text-primary hover:text-primary/80 transition-colors"
+          >
+            Spark Links
+          </Link>
+        </div>
 
         {/* 右側：按鈕區域 */}
         <div className="flex items-center space-x-4">

@@ -12,9 +12,7 @@ import {
   UserPlus, 
   MessageSquare, 
   ClipboardList,
-  Mail,
   BookOpen,
-  Plus,
   User
 } from 'lucide-react'
 import { useAuthStore } from '@/stores/auth'
