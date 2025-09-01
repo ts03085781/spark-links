@@ -333,34 +333,39 @@ export default function ProjectDetailPage() {
               <CardTitle className="text-lg">專案創建者</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="flex items-center gap-3">
-                <Avatar className="h-12 w-12">
-                  <AvatarImage src={project.creator?.avatar_url} />
-                  <AvatarFallback>
-                    {project.creator?.name?.charAt(0) || 'U'}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="flex-1">
-                  <p className="font-medium">{project.creator?.name}</p>
-                  {project.creator?.skills && project.creator.skills.length > 0 && (
-                    <div className="flex flex-wrap gap-1 mt-1">
-                      {project.creator.skills.slice(0, 3).map((skill, index) => (
-                        <Badge key={index} variant="outline" className="text-xs">
-                          {skill}
-                        </Badge>
-                      ))}
-                    </div>
-                  )}
+              <Link 
+                href={`/talents/${project.creator_id}`}
+                className="block p-3 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer"
+              >
+                <div className="flex items-center gap-3">
+                  <Avatar className="h-12 w-12">
+                    <AvatarImage src={project.creator?.avatar_url} />
+                    <AvatarFallback>
+                      {project.creator?.name?.charAt(0) || 'U'}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1">
+                    <p className="font-medium">{project.creator?.name}</p>
+                    {project.creator?.skills && project.creator.skills.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mt-1">
+                        {project.creator.skills.slice(0, 3).map((skill, index) => (
+                          <Badge key={index} variant="outline" className="text-xs">
+                            {skill}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-              {project.creator?.experience_description && (
-                <>
-                  <Separator className="my-3" />
-                  <p className="text-xs text-muted-foreground line-clamp-3">
-                    {project.creator.experience_description}
-                  </p>
-                </>
-              )}
+                {project.creator?.experience_description && (
+                  <>
+                    <Separator className="my-3" />
+                    <p className="text-xs text-muted-foreground line-clamp-3">
+                      {project.creator.experience_description}
+                    </p>
+                  </>
+                )}
+              </Link>
             </CardContent>
           </Card>
 
@@ -372,7 +377,11 @@ export default function ProjectDetailPage() {
               </CardHeader>
               <CardContent className="space-y-3">
                 {teamMembers.map((member) => (
-                  <div key={member.id} className="flex items-center gap-3">
+                  <Link 
+                    key={member.id} 
+                    href={`/talents/${member.user_id}`}
+                    className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer"
+                  >
                     <Avatar className="h-8 w-8">
                       <AvatarImage src={member.user?.avatar_url} />
                       <AvatarFallback className="text-xs">
@@ -387,7 +396,7 @@ export default function ProjectDetailPage() {
                         {member.role === 'creator' ? '創建者' : member.role}
                       </p>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </CardContent>
             </Card>
