@@ -4,7 +4,7 @@ import { User } from '@/types'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-// import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Separator } from '@/components/ui/separator'
 import { 
   MapPin, 
@@ -17,7 +17,6 @@ import {
 } from 'lucide-react'
 // import { cn } from '@/lib/utils'
 import Link from 'next/link'
-import Image from 'next/image'
 
 interface TalentCardProps {
   talent: User
@@ -29,13 +28,12 @@ export function TalentCard({ talent }: TalentCardProps) {
       <CardHeader className="text-center pb-3">
         <div className="mx-auto w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mb-3">
           {talent.avatar_url ? (
-            <Image 
-              src={talent.avatar_url} 
-              alt={talent.name}
-              width={80}
-              height={80}
-              className="w-20 h-20 rounded-full object-cover"
-            />
+            <Avatar className="h-25 w-25">
+              <AvatarImage src={talent.avatar_url} />
+              <AvatarFallback className="text-xs">
+                {talent.name?.charAt(0) || 'U'}
+              </AvatarFallback>
+            </Avatar>
           ) : (
             <Mail className="h-10 w-10 text-primary" />
           )}
