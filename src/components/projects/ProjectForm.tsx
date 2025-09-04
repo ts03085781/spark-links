@@ -63,7 +63,7 @@ export function ProjectForm({ onSubmit, onCancel, isLoading, initialData, submit
       project_stage: initialData?.project_stage || 'idea',
       is_public: initialData?.is_public ?? true,
     },
-  })
+  } as never)
 
   const requiredRoles = form.watch('required_roles')
   const requiredSkills = form.watch('required_skills')

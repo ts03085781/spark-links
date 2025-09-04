@@ -91,7 +91,7 @@ export function ReceivedInvitationCard({ invitation, onUpdate }: ReceivedInvitat
           status: 'accepted',
           response_message: '感謝邀請，我很樂意加入這個專案！',
           updated_at: new Date().toISOString()
-        })
+        } as never)
         .eq('id', invitation.id)
         .eq('invitee_id', user.id)
         .eq('status', 'pending')
@@ -111,14 +111,14 @@ export function ReceivedInvitationCard({ invitation, onUpdate }: ReceivedInvitat
           project_id: invitation.project_id,
           user_id: user.id,
           role: 'member'
-        })
+        } as never)
 
       if (memberError) {
         console.error('加入專案成員失敗:', memberError)
         // 如果加入成員失敗，嘗試回滾邀請狀態
         await supabase
           .from('invitations')
-          .update({ status: 'pending' })
+          .update({ status: 'pending' } as never)
           .eq('id', invitation.id)
         
         toast.error('加入專案失敗', {
@@ -129,7 +129,7 @@ export function ReceivedInvitationCard({ invitation, onUpdate }: ReceivedInvitat
 
       // 更新專案的當前團隊人數
       const { error: projectError } = await supabase
-        .rpc('increment_team_size', { project_id: invitation.project_id })
+        .rpc('increment_team_size', { project_id: invitation.project_id } as never)
 
       if (projectError) {
         console.error('更新專案團隊人數失敗:', projectError)
@@ -167,7 +167,7 @@ export function ReceivedInvitationCard({ invitation, onUpdate }: ReceivedInvitat
           status: 'rejected',
           response_message: rejectReason.trim(),
           updated_at: new Date().toISOString()
-        })
+        } as never)
         .eq('id', invitation.id)
         .eq('invitee_id', user.id)
         .eq('status', 'pending')

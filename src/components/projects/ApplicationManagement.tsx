@@ -92,7 +92,7 @@ export function ApplicationManagement({
         .update({
           status,
           response_message: responseMessage
-        })
+        } as never)
         .eq('id', applicationId)
 
       if (updateError) {
@@ -113,7 +113,7 @@ export function ApplicationManagement({
               project_id: projectId,
               user_id: application.applicant_id,
               role: 'member'
-            }])
+            } as never])
 
           if (memberError) {
             console.error('加入團隊失敗:', memberError)

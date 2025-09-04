@@ -92,7 +92,7 @@ export function ReceivedApplicationCard({ application, onUpdate }: ReceivedAppli
           status: 'accepted',
           response_message: '恭喜！你的申請已通過，歡迎加入我們的專案！',
           updated_at: new Date().toISOString()
-        })
+        } as never)
         .eq('id', application.id)
         .eq('status', 'pending')
 
@@ -111,14 +111,14 @@ export function ReceivedApplicationCard({ application, onUpdate }: ReceivedAppli
           project_id: application.project_id,
           user_id: application.applicant_id,
           role: 'member'
-        })
+        } as never)
 
       if (memberError) {
         console.error('加入專案成員失敗:', memberError)
         // 如果加入成員失敗，嘗試回滾申請狀態
         await supabase
           .from('applications')
-          .update({ status: 'pending' })
+          .update({ status: 'pending' } as never)
           .eq('id', application.id)
         
         toast.error('加入專案失敗', {
@@ -129,7 +129,7 @@ export function ReceivedApplicationCard({ application, onUpdate }: ReceivedAppli
 
       // 更新專案的當前團隊人數
       const { error: projectError } = await supabase
-        .rpc('increment_team_size', { project_id: application.project_id })
+        .rpc('increment_team_size', { project_id: application.project_id } as never)
 
       if (projectError) {
         console.error('更新專案團隊人數失敗:', projectError)
@@ -167,7 +167,7 @@ export function ReceivedApplicationCard({ application, onUpdate }: ReceivedAppli
           status: 'rejected',
           response_message: rejectReason.trim(),
           updated_at: new Date().toISOString()
-        })
+        } as never)
         .eq('id', application.id)
         .eq('status', 'pending')
 

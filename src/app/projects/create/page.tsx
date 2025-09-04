@@ -34,7 +34,7 @@ export default function CreateProjectPage() {
           required_skills: data.required_skills,
           project_stage: data.project_stage,
           is_public: data.is_public,
-        })
+        } as never)
         .select()
         .single()
 
@@ -51,7 +51,7 @@ export default function CreateProjectPage() {
       })
 
       // 導向專案詳情頁
-      router.push(`/projects/${project.id}`)
+      router.push(`/projects/${(project as ProjectFormData)?.id}`)
     } catch (error) {
       console.error('創建專案時發生錯誤:', error)
       toast.error('系統錯誤', {

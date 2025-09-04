@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ProjectFilters } from '@/types'
+import { ProjectFilters, Project } from '@/types'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
@@ -10,13 +10,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
+// import {
+//   Select,
+//   SelectContent,
+//   SelectItem,
+//   SelectTrigger,
+//   SelectValue,
+// } from '@/components/ui/select'
 import { Filter, X, Plus } from 'lucide-react'
 
 interface ProjectFiltersComponentProps {
@@ -84,7 +84,7 @@ export function ProjectFiltersComponent({
 
   const toggleStage = (stage: string) => {
     const currentStages = filters.project_stage || []
-    const isSelected = currentStages.includes(stage as any)
+    const isSelected = currentStages.includes(stage as Project['project_stage'])
     
     if (isSelected) {
       onFiltersChange({
@@ -94,7 +94,7 @@ export function ProjectFiltersComponent({
     } else {
       onFiltersChange({
         ...filters,
-        project_stage: [...currentStages, stage as any]
+        project_stage: [...currentStages, stage as Project['project_stage']]
       })
     }
   }
@@ -145,7 +145,7 @@ export function ProjectFiltersComponent({
               <label className="text-sm font-medium">專案階段</label>
               <div className="flex flex-wrap gap-2">
                 {stageOptions.map((option) => {
-                  const isSelected = filters.project_stage?.includes(option.value as any) || false
+                  const isSelected = filters.project_stage?.includes(option.value as Project['project_stage']) || false
                   return (
                     <Badge
                       key={option.value}

@@ -126,14 +126,14 @@ export const useApplicationsStore = create<ApplicationsState>((set, get) => ({
         return { error: '您已經申請過此專案' }
       }
       
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('applications')
         .insert({
           project_id: projectId,
           applicant_id: user.id,
           message,
           status: 'pending',
-        })
+        } as never)
         .select()
         .single()
       
@@ -146,6 +146,7 @@ export const useApplicationsStore = create<ApplicationsState>((set, get) => ({
       
       return {}
     } catch (error) {
+      console.error('Error creating application:', error)
       return { error: '提交申請失敗，請稍後再試' }
     }
   },
@@ -159,7 +160,7 @@ export const useApplicationsStore = create<ApplicationsState>((set, get) => ({
         .update({
           status,
           response_message: message,
-        })
+        } as never)
         .eq('id', applicationId)
         .select()
         .single()
@@ -173,10 +174,10 @@ export const useApplicationsStore = create<ApplicationsState>((set, get) => ({
         const { error: memberError } = await supabase
           .from('project_members')
           .insert({
-            project_id: data.project_id,
-            user_id: data.applicant_id,
+            project_id: (data as Application).project_id,
+            user_id: (data as Application).applicant_id,
             role: 'member',
-          })
+          } as never)
         
         if (memberError) {
           console.error('Error adding member to project:', memberError)
@@ -185,12 +186,13 @@ export const useApplicationsStore = create<ApplicationsState>((set, get) => ({
       
       // 更新本地狀態
       const applications = get().applications.map(app => 
-        app.id === applicationId ? { ...app, ...data } : app
+        app.id === applicationId ? { ...app, ...(data as Application) } : app as Application
       )
       set({ applications })
       
       return {}
     } catch (error) {
+      console.error('Error responding to application:', error)
       return { error: '回覆申請失敗，請稍後再試' }
     }
   },
@@ -277,7 +279,7 @@ export const useApplicationsStore = create<ApplicationsState>((set, get) => ({
         return { error: '您已經邀請過此用戶' }
       }
       
-      const { data, error } = await supabase
+      const {  error } = await supabase
         .from('invitations')
         .insert({
           project_id: projectId,
@@ -285,7 +287,7 @@ export const useApplicationsStore = create<ApplicationsState>((set, get) => ({
           invitee_id: inviteeId,
           message,
           status: 'pending',
-        })
+        } as never)
         .select()
         .single()
       
@@ -298,6 +300,7 @@ export const useApplicationsStore = create<ApplicationsState>((set, get) => ({
       
       return {}
     } catch (error) {
+      console.error('Error creating invitation:', error)
       return { error: '發送邀請失敗，請稍後再試' }
     }
   },
@@ -312,7 +315,7 @@ export const useApplicationsStore = create<ApplicationsState>((set, get) => ({
         .update({
           status,
           response_message: message,
-        })
+        } as never)
         .eq('id', invitationId)
         .select()
         .single()
@@ -326,10 +329,10 @@ export const useApplicationsStore = create<ApplicationsState>((set, get) => ({
         const { error: memberError } = await supabase
           .from('project_members')
           .insert({
-            project_id: data.project_id,
-            user_id: data.invitee_id,
+            project_id: (data as Application).project_id,
+            user_id: (data as Invitation).invitee_id,
             role: 'member',
-          })
+          } as never)
         
         if (memberError) {
           console.error('Error adding member to project:', memberError)
@@ -338,12 +341,13 @@ export const useApplicationsStore = create<ApplicationsState>((set, get) => ({
       
       // 更新本地狀態
       const invitations = get().invitations.map(inv => 
-        inv.id === invitationId ? { ...inv, ...data } : inv
+        inv.id === invitationId ? { ...inv, ...(data as Application) } : inv
       )
       set({ invitations })
       
       return {}
     } catch (error) {
+      console.error('Error responding to invitation:', error)
       return { error: '回覆邀請失敗，請稍後再試' }
     }
   },

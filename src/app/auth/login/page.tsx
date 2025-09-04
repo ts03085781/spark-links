@@ -16,7 +16,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+// import { Label } from '@/components/ui/label'
 import {
   Form,
   FormControl,
@@ -70,6 +70,7 @@ export default function LoginPage() {
       // 登入成功，重導向到首頁
       router.push('/')
     } catch (error) {
+      console.error('登入失敗:', error)
       setError('登入失敗，請稍後再試')
     } finally {
       setIsLoading(false)

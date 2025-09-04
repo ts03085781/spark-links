@@ -143,7 +143,7 @@ export default function ProjectDetailPage() {
           project_id: project.id,
           applicant_id: user.id,
           message: `我想加入「${project.title}」專案！`
-        }])
+        } as never])
 
       if (error) {
         console.error('申請加入失敗:', error)

@@ -163,6 +163,7 @@ export interface ProfileForm {
 }
 
 export interface ProjectForm {
+  id?: string
   title: string
   description: string
   target_team_size: number

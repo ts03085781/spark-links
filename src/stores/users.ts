@@ -25,7 +25,7 @@ interface UsersState {
   // API Actions
   fetchUsers: (filters?: UserFilters, page?: number) => Promise<void>
   fetchUser: (id: string) => Promise<void>
-  updateProfile: (profileData: any) => Promise<{ error?: string }>
+  updateProfile: (profileData: User) => Promise<{ error?: string }>
   searchUsers: (keyword: string) => Promise<void>
 }
 
@@ -148,7 +148,7 @@ export const useUsersStore = create<UsersState>((set, get) => ({
       
       const { data, error } = await supabase
         .from('users')
-        .update(profileData)
+        .update(profileData as never)
         .eq('id', user.id)
         .select()
         .single()
@@ -164,6 +164,7 @@ export const useUsersStore = create<UsersState>((set, get) => ({
       
       return {}
     } catch (error) {
+      console.error('Error updating profile:', error)
       return { error: '更新個人資料失敗，請稍後再試' }
     }
   },

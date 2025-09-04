@@ -60,7 +60,7 @@ export function AvatarUpload({
     }
   }
 
-  const uploadAvatar = async (file: File) => {
+  const uploadAvatar = useCallback(async (file: File) => {
     if (!user) {
       toast.error('請先登入')
       return
@@ -103,7 +103,7 @@ export function AvatarUpload({
       // 5. 更新數據庫中的 avatar_url
       const { error: updateError } = await supabase
         .from('users')
-        .update({ avatar_url: publicUrl } as any)
+        .update({ avatar_url: publicUrl } as never)
         .eq('id', user.id)
 
       if (updateError) {
@@ -126,7 +126,7 @@ export function AvatarUpload({
     } finally {
       setIsUploading(false)
     }
-  }
+  }, [user, onAvatarChange])
 
   const removeAvatar = async () => {
     if (!user) return
@@ -145,7 +145,7 @@ export function AvatarUpload({
       // 2. 清除數據庫中的 avatar_url
       const { error } = await supabase
         .from('users')
-        .update({ avatar_url: null } as any)
+        .update({ avatar_url: null } as never)
         .eq('id', user.id)
 
       if (error) {
@@ -172,7 +172,7 @@ export function AvatarUpload({
     if (file) {
       uploadAvatar(file)
     }
-  }, [])
+  }, [uploadAvatar])
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,

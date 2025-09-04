@@ -10,7 +10,7 @@ import {
   Users, 
   Calendar, 
   Target,
-  MapPin,
+  // MapPin,
   ChevronRight
 } from 'lucide-react'
 import { cn } from '@/lib/utils'

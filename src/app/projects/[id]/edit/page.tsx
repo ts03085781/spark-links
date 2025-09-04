@@ -72,7 +72,7 @@ export default function EditProjectPage() {
           required_skills: data.required_skills,
           project_stage: data.project_stage,
           is_public: data.is_public,
-        })
+        } as never)
         .eq('id', project.id)
         .eq('creator_id', user.id)
 

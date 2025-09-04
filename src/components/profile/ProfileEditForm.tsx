@@ -69,7 +69,7 @@ export function ProfileEditForm({ user, onSave, onCancel, onAvatarChange, isLoad
       specific_location: user.specific_location || '',
       is_public: user.is_public || false,
     },
-  })
+  } as never)
 
   const skills = form.watch('skills')
   const locationPreference = form.watch('location_preference')
@@ -102,7 +102,7 @@ export function ProfileEditForm({ user, onSave, onCancel, onAvatarChange, isLoad
   }
 
   const onSubmit = async (data: ProfileFormData) => {
-    await onSave(data)
+    await onSave(data as ProfileFormData)
   }
 
   return (

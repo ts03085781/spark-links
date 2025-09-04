@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { createClient } from '@/lib/supabase/browser'
-import { Project, ProjectFilters, PaginatedResponse } from '@/types'
+import { Project, ProjectFilters } from '@/types'
 
 interface ProjectsState {
   projects: Project[]
@@ -25,8 +25,8 @@ interface ProjectsState {
   // API Actions
   fetchProjects: (filters?: ProjectFilters, page?: number) => Promise<void>
   fetchProject: (id: string) => Promise<void>
-  createProject: (projectData: any) => Promise<{ error?: string }>
-  updateProject: (id: string, projectData: any) => Promise<{ error?: string }>
+  createProject: (projectData: Project) => Promise<{ error?: string }>
+  updateProject: (id: string, projectData: Project) => Promise<{ error?: string }>
   deleteProject: (id: string) => Promise<{ error?: string }>
   searchProjects: (keyword: string) => Promise<void>
 }
@@ -158,13 +158,13 @@ export const useProjectsStore = create<ProjectsState>((set, get) => ({
   },
   
   // 建立專案
-  createProject: async (projectData) => {
+  createProject: async (projectData: Project) => {
     const supabase = createClient()
     
     try {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('projects')
-        .insert(projectData)
+        .insert(projectData as never)
         .select()
         .single()
       
@@ -177,18 +177,19 @@ export const useProjectsStore = create<ProjectsState>((set, get) => ({
       
       return {}
     } catch (error) {
+      console.log('Error creating project:', error)
       return { error: '建立專案失敗，請稍後再試' }
     }
   },
   
   // 更新專案
-  updateProject: async (id: string, projectData) => {
+  updateProject: async (id: string, projectData: Project) => {
     const supabase = createClient()
     
     try {
       const { data, error } = await supabase
         .from('projects')
-        .update(projectData)
+        .update(projectData as never)
         .eq('id', id)
         .select()
         .single()
@@ -204,12 +205,13 @@ export const useProjectsStore = create<ProjectsState>((set, get) => ({
       
       // 更新專案列表
       const projects = get().projects.map(p => 
-        p.id === id ? { ...p, ...data } : p
+        p.id === id ? { ...p, ...(data as Project) } : p
       )
       set({ projects })
       
       return {}
     } catch (error) {
+      console.error('Error updating project:', error)
       return { error: '更新專案失敗，請稍後再試' }
     }
   },
@@ -239,6 +241,7 @@ export const useProjectsStore = create<ProjectsState>((set, get) => ({
       
       return {}
     } catch (error) {
+      console.error('Error deleting project:', error)
       return { error: '刪除專案失敗，請稍後再試' }
     }
   },

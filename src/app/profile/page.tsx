@@ -22,6 +22,7 @@ import {
   Lock
 } from 'lucide-react'
 import { toast } from 'sonner'
+import Image from 'next/image'
 
 export default function ProfilePage() {
   const { user, setUser } = useAuthStore()
@@ -70,7 +71,7 @@ export default function ProfilePage() {
 
       const { error } = await supabase
         .from('users')
-        .update(updateData)
+        .update(updateData as never)
         .eq('id', user.id)
 
       if (error) {
@@ -176,9 +177,11 @@ export default function ProfilePage() {
               <CardHeader className="text-center">
                 <div className="mx-auto w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                   {currentAvatarUrl ? (
-                    <img 
+                    <Image 
                       src={currentAvatarUrl} 
                       alt={user.name}
+                      width={96}
+                      height={96}
                       className="w-24 h-24 rounded-full object-cover"
                     />
                   ) : (

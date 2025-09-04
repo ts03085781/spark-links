@@ -90,6 +90,7 @@ export default function RegisterPage() {
         router.push('/auth/login')
       }, 2000)
     } catch (error) {
+      console.error('註冊失敗:', error)
       setError('註冊失敗，請稍後再試')
     } finally {
       setIsLoading(false)

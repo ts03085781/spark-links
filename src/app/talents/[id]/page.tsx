@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button'
 import { ArrowLeft, UserX, Lock } from 'lucide-react'
 import { toast } from 'sonner'
 
+
 export default function TalentDetailPage() {
   const params = useParams()
   const router = useRouter()
@@ -48,7 +49,7 @@ export default function TalentDetailPage() {
         return
       }
 
-      if (!data.is_public) {
+      if (!(data as User).is_public) {
         setIsPrivate(true)
         return
       }

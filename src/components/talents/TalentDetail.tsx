@@ -1,12 +1,12 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { User, Project } from '@/types'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Separator } from '@/components/ui/separator'
+// import { Separator } from '@/components/ui/separator'
 import {
   Dialog,
   DialogContent,
@@ -18,7 +18,7 @@ import {
 import { 
   MapPin, 
   Briefcase, 
-  Mail,
+  // Mail,
   MessageSquare,
   Globe,
   User as UserIcon,
@@ -26,7 +26,7 @@ import {
   Phone,
   ExternalLink,
   Plus,
-  FolderOpen
+  // FolderOpen
 } from 'lucide-react'
 import { useAuthStore } from '@/stores/auth'
 import { createClient } from '@/lib/supabase/browser'
@@ -108,7 +108,7 @@ export function TalentDetail({ talent }: TalentDetailProps) {
           invitee_id: talent.id,
           message: `邀請您加入「${project.title}」專案`,
           status: 'pending'
-        })
+        } as never)
 
       if (error) {
         console.error('發送邀請失敗:', error)
@@ -336,8 +336,8 @@ export function TalentDetail({ talent }: TalentDetailProps) {
                       <h4 className="font-medium text-lg">{project.title}</h4>
                       <Badge variant="secondary" className="text-xs">
                         {project.project_stage === 'idea' ? '構想階段' :
-                         project.project_stage === 'prototype' ? '原型開發' :
-                         project.project_stage === 'beta' ? '測試階段' : '已上線'}
+                          project.project_stage === 'prototype' ? '原型開發' :
+                          project.project_stage === 'beta' ? '測試階段' : '已上線'}
                       </Badge>
                     </div>
                     <p className="text-sm text-muted-foreground line-clamp-2">

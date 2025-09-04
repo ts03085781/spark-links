@@ -11,12 +11,12 @@ import { Button } from '@/components/ui/button'
 import { PageLoading } from '@/components/ui/loading'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { 
-  ClipboardList, 
+  // ClipboardList, 
   Send,
   Inbox,
   Clock, 
   CheckCircle, 
-  XCircle,
+  // XCircle,
   Search
 } from 'lucide-react'
 import Link from 'next/link'
@@ -84,7 +84,7 @@ export default function ApplicationsPage() {
         return
       }
 
-      const projectIds = projects?.map(p => p.id) || []
+      const projectIds = (projects as { id: string }[] | null)?.map(p => p.id) || []
       
       if (projectIds.length === 0) {
         setReceivedApplications([])

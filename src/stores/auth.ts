@@ -39,7 +39,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     set({ isLoading: true })
     
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const {  error } = await supabase.auth.signInWithPassword({
         email,
         password,
       })
@@ -69,6 +69,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       set({ user: userData, isAuthenticated: true, isLoading: false })
       return {}
     } catch (error) {
+      console.error('Login error:', error)
       set({ isLoading: false })
       return { error: '登入失敗，請稍後再試' }
     }
@@ -81,7 +82,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     
     try {
       // 註冊用戶，將姓名存在 metadata 中
-      const { data, error } = await supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -144,6 +145,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       
       get().setUser(userData)
     } catch (error) {
+      console.error('Refresh user error:', error)
       get().setUser(null)
     }
   },

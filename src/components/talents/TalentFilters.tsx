@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { UserFilters } from '@/types'
+import { UserFilters, User } from '@/types'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
@@ -57,7 +57,7 @@ export function TalentFilters({
 
   const toggleWorkMode = (mode: string) => {
     const currentModes = filters.work_mode || []
-    const isSelected = currentModes.includes(mode as any)
+    const isSelected = currentModes.includes(mode as User['work_mode'])
     
     if (isSelected) {
       onFiltersChange({
@@ -67,14 +67,14 @@ export function TalentFilters({
     } else {
       onFiltersChange({
         ...filters,
-        work_mode: [...currentModes, mode as any]
+        work_mode: [...currentModes, mode as User['work_mode']]
       })
     }
   }
 
   const toggleLocation = (location: string) => {
     const currentLocations = filters.location_preference || []
-    const isSelected = currentLocations.includes(location as any)
+    const isSelected = currentLocations.includes(location as User['location_preference'])
     
     if (isSelected) {
       onFiltersChange({
@@ -84,7 +84,7 @@ export function TalentFilters({
     } else {
       onFiltersChange({
         ...filters,
-        location_preference: [...currentLocations, location as any]
+        location_preference: [...currentLocations, location as User['location_preference']]
       })
     }
   }
@@ -135,7 +135,7 @@ export function TalentFilters({
               <label className="text-sm font-medium">工作模式</label>
               <div className="flex flex-wrap gap-2">
                 {workModeOptions.map((option) => {
-                  const isSelected = filters.work_mode?.includes(option.value as any) || false
+                  const isSelected = filters.work_mode?.includes(option.value as User['work_mode']) || false
                   return (
                     <Badge
                       key={option.value}
@@ -155,7 +155,7 @@ export function TalentFilters({
               <label className="text-sm font-medium">地點偏好</label>
               <div className="flex flex-wrap gap-2">
                 {locationOptions.map((option) => {
-                  const isSelected = filters.location_preference?.includes(option.value as any) || false
+                  const isSelected = filters.location_preference?.includes(option.value as User['location_preference']) || false
                   return (
                     <Badge
                       key={option.value}

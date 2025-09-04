@@ -63,7 +63,11 @@ export default function MyProjectsPage() {
       }
 
       // 轉換數據格式
-      const projectsWithRole = data?.map(item => ({
+      const projectsWithRole = (data as Array<{
+        role: string
+        joined_at: string
+        project: Project
+      }>)?.map(item => ({
         ...item.project,
         member_role: item.role,
         joined_at: item.joined_at
